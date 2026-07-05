@@ -1,5 +1,9 @@
-# Awesome-Differential-Privacy
-## Differential Privacy in AI: History, Progression, Variants, & Applications
+<div align="center">
+  <img src="assets/banner.svg" alt="Banner">
+</div>
+
+# 🛡️ Awesome-Differential-Privacy
+## 🔒 Differential Privacy in AI: History, Progression, Variants, & Applications
 
 **Differential Privacy (DP)** is a mathematically rigorous, cryptographic validation framework designed to guarantee strong data privacy protections during the training and deployment of Artificial Intelligence systems. Formalized by Cynthia Dwork, Frank McSherry, Kobbi Nissim, and Adam Smith in 2006, Differential Privacy provides a quantifiable upper bound on the amount of personal information an adversary can extract from an AI model. 
 
@@ -7,7 +11,7 @@ Structurally, DP ensures that the output distribution of an algorithm is practic
 
 ---
 
-## 1. The Macro Chronological Evolution
+## 🕰️ 1. The Macro Chronological Evolution
 
 The implementation of mathematical privacy protection has transitioned from flat tabular database querying to decentralized local noise injections, private gradient descents, and modern foundation model fine-tuning enclaves.
 
@@ -29,7 +33,7 @@ flowchart LR
 
 ---
 
-## 2. Core Functional & Algorithmic Variants
+## ⚙️ 2. Core Functional & Algorithmic Variants
 
 Differential Privacy implementations are strictly categorized based on the exact structural location where the noise perturbation is injected across the data ecosystem.
 
@@ -41,7 +45,7 @@ Differential Privacy implementations are strictly categorized based on the exact
 
 ---
 
-## 3. The Privacy Accounting & Renyi DP Matrix
+## 🧮 3. The Privacy Accounting & Renyi DP Matrix
 
 To verify and balance mathematical privacy leakage over extended training timelines, automated optimization loops run continuous information-tracking subroutines.
 
@@ -66,7 +70,7 @@ A["Confidential Mini-Batch"]
 
 ---
 
-## 4. Production Engineering Challenges & Hardware Solutions
+## 🏗️ 4. Production Engineering Challenges & Hardware Solutions
 
 Translating theoretical differential privacy constraints onto standard parallel computing architectures introduces intense processing latencies and optimization bottlenecks.
 
@@ -77,7 +81,7 @@ Translating theoretical differential privacy constraints onto standard parallel 
 
 ---
 
-## 5. Frontier Real-World AI Security Applications
+## 🚀 5. Frontier Real-World AI Security Applications
 
 | Application Area | Application Details | Year First Used | Paper Link |
 |---|---|---|---|
@@ -87,7 +91,7 @@ Translating theoretical differential privacy constraints onto standard parallel 
 
 ---
 
-## References
+## 📚 References
 1. Dwork, C., McSherry, F., Nissim, K., & Smith, A. (2006). Calibrating noise to sensitivity in private data analysis. *Theory of Cryptography Conference*, 265-284.
 2. Dwork, C. (2006). Differential privacy. *International Automata, Languages and Programming (ICALP) Conference*, 1-12.
 3. Erlingsson, Ú., Pihur, V., & Korolova, A. (2014). RAPPOR: Randomized aggregatable privacy-preserving ordinal response. *Proceedings of the 2014 ACM SIGSAC Conference on Computer and Communications Security*, 1054-1067.
