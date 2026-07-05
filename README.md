@@ -41,19 +41,19 @@ flowchart LR
 
 Differential Privacy implementations are strictly categorized based on the exact structural location where the noise perturbation is injected across the data ecosystem.
 
-### A. Central Differential Privacy (Global DP)
-*   **Mechanism:** Raw, unaltered user records are collected and stored inside a centralized data warehouse. The privacy framework adds calibrated noise strictly to the final computed outputs, parameters, or models when exporting files or providing API access to external clients.
-*   **Pros:** Maximizes the performance utility of the model because noise is applied globally and efficiently.
-*   **Cons:** Requires users to maintain absolute, unwavering trust in the central cloud hosting provider's internal security parameters.
+- ### A. Central Differential Privacy (Global DP)
+	*   **Mechanism:** Raw, unaltered user records are collected and stored inside a centralized data warehouse. The privacy framework adds calibrated noise strictly to the final computed outputs, parameters, or models when exporting files or providing API access to external clients.
+	*   **Pros:** Maximizes the performance utility of the model because noise is applied globally and efficiently.
+	*   **Cons:** Requires users to maintain absolute, unwavering trust in the central cloud hosting provider's internal security parameters.
 
-### B. Local Differential Privacy (LDP)
-*   **Mechanism:** The user's device injects noise into telemetry logs or text strings right at the source before data ever enters a network wire. The central cloud server only ever ingests heavily randomized, noisy, and partially corrupted data arrays.
-*   **Pros:** Eliminates the trusted-central-server vulnerability completely.
-*   **Cons:** Demands massive data scaling pools to extract valid global statistics, degrading model precision heavily on small-batch conditions.
+- ### B. Local Differential Privacy (LDP)
+	*   **Mechanism:** The user's device injects noise into telemetry logs or text strings right at the source before data ever enters a network wire. The central cloud server only ever ingests heavily randomized, noisy, and partially corrupted data arrays.
+	*   **Pros:** Eliminates the trusted-central-server vulnerability completely.
+	*   **Cons:** Demands massive data scaling pools to extract valid global statistics, degrading model precision heavily on small-batch conditions.
 
-### C. Differentially Private SGD (DP-SGD)
-*   **Mechanism:** Intercepts the internal backpropagation matrix during deep model optimization. It computes independent gradients per data sample, clips their vector magnitudes to a maximum cap ($C$), and blends in a calibrated Gaussian noise tensor ($\sigma \cdot C$) before execution weight adjustments finalize.
-*   **Pros:** Offers certified, provable mathematical tracking bounds against membership inference exploits.
+- ### C. Differentially Private SGD (DP-SGD)
+	*   **Mechanism:** Intercepts the internal backpropagation matrix during deep model optimization. It computes independent gradients per data sample, clips their vector magnitudes to a maximum cap ($C$), and blends in a calibrated Gaussian noise tensor ($\sigma \cdot C$) before execution weight adjustments finalize.
+	*   **Pros:** Offers certified, provable mathematical tracking bounds against membership inference exploits.
 
 ---
 
