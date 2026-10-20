@@ -134,80 +134,156 @@ Before updating this documentation layout, let me know how you would like to pro
 </div>
 # Awesome-Differential-Privacy
 
-# Top Differential Privacy Ecosystem
-
-**Curated List of SaaS Products & Open-Source GitHub Projects**  
-*Focused on Formal Privacy Guarantees, DP-SGD & Synthetic Data Generation*  
-**Last updated: October 2026**
-
-This repository tracks notable **SaaS platforms** and **open-source projects** for **Differential Privacy**. These tools enable organizations to extract statistical insights from sensitive datasets while providing a mathematical guarantee that no individual's data can be re-identified—from local differential privacy libraries that noise raw data before collection to central DP frameworks that add calibrated noise to query results.
-
-**Examples** include Google Differential Privacy Library, OpenDP, SmartNoise, IBM Differential Privacy Library, Privitar, Immuta, and DPSDG (the category leaders).
-
-**Open-source emphasis**: This section is heavily expanded with every major active project for local DP, DP-SGD training, and synthetic data generation—ideal for privacy engineers, data scientists, and organizations seeking transparent, vendor-independent privacy infrastructure.
-
-Contributions welcome! Open a PR to add/update entries. Keep descriptions factual and link to official sites.
-
-## Table of Contents
-- [SaaS/Hosted Platforms](#saas-hosted-platforms)
-- [Open-Source GitHub Projects](#open-source-github-projects)
-- [How to Contribute](#how-to-contribute)
-- [Disclaimer](#disclaimer)
-
-## SaaS/Hosted Platforms
-
-- **Privitar (Informatica)**
-  **Data privacy platform with differential privacy module** — acquired by Informatica in June 2023 . The **Privitar Data Privacy Platform** integrates policy-based data privacy, masking, tokenization, and differential privacy into provisioning pipelines. **Privitar Differential Privacy** applies calibrated noise to datasets or query outputs for interactive analytics and non-interactive publication. **Trade-offs**: implementation typically requires lengthy enterprise deployment and specialist skills; post-acquisition, integration overhead increases for standalone buyers outside the Informatica stack . **Best for**: large enterprises in banking, healthcare, and insurance needing DP alongside broader data governance.
-
-- **Immuta**
-  **Data access governance platform** with policy enforcement, data masking, and audit trails. **Note**: Immuta's focus is access control and masking—differential privacy is not a native capability. **Best for**: organizations needing broad data governance, not mathematically guaranteed DP.
-
-## Open-Source GitHub Projects
-
-- **Google Differential Privacy Library**
-  **Differential Privacy libraries in C++, Java, and Go** (Apache-2.0) — **the performance benchmark for DP libraries** . **Core is implemented in C++** with Python bindings via **PyDP**, plus native Go and Java interfaces . **Supports count, sum, mean, variance, and percentiles** with both Laplace and Gaussian mechanisms. **Empirical benchmarks show GoogleDP consistently outperforms OpenDP in computational speed for Count and Sum queries**, with the advantage growing for larger datasets; OpenDP sometimes offers comparable or marginally better utility for Sum queries under stricter privacy settings . **Best for**: teams needing **fast, battle-tested DP aggregations** with broad language support.
-
-- **OpenDP**
-  **Community-driven DP library** (MIT) — initiated by **Harvard University** with Microsoft and others . **Composable architecture** built from transformations and measurements—designed for correctness and extensibility. **SmartNoise SDK** is part of the OpenDP project, with **SmartNoise SQL** for differentially private SQL queries and **SmartNoise Synth** for synthetic data generation (including **PATE-CTGAN**, a GAN-based method) . **The trade-off**: OpenDP's composable design may introduce performance overhead compared to GoogleDP's direct optimization, though utility can be competitive . **Best for**: teams wanting **a formally verified, extensible DP framework** with synthetic data capabilities.
-
-- **trasgoDP**
-  **Local Differential Privacy library for numerical, categorical, and location data** (open-source) — **the local DP choice** . **Numerical**: Laplace and Gaussian mechanisms with clipping. **Categorical**: Exponential mechanism and Randomized Response (binary and k-ary). **Location**: geo-indistinguishability for metric privacy . **Designed for pandas DataFrames**—apply DP directly to columns before data leaves the local environment. **Best for**: teams implementing **local DP** where noise is added to raw data at the source.
-
-- **DPSDG (Differentially Private Synthetic Data Generation)**
-  **DP-SGD extension for CTGAN and TVAE** (open-source) — **the DP synthetic data choice** . **Extends the popular `ctgan` package** with differentially private training via **DP-SGD** . **API mirrors the original**: swap `CTGAN` for `IterDPCTGAN` and add `epsilon`, `delta`, and `max_grad_norm` parameters . **Produces synthetic records that preserve statistical patterns without reproducing real individuals**—shareable for analytics and ML training where original data cannot be used. **Best for**: teams needing **privacy-preserving synthetic datasets** from tabular data.
-
-- **LDP-hierarchical-mechanism**
-  **Hierarchical mechanism for Local Differential Privacy** (open-source) — **the range query and quantile estimation choice** . Implements the **Hierarchical Mechanism** from Kulkarni, Cormode, and Srivastava for **answering range queries under local DP** . **Supports quantile estimation** and **range queries** with post-processing for improved accuracy. **Built on the pure-LDP frequency protocols** . **Best for**: teams needing **range queries and quantiles** under local DP constraints.
-
-### Additional Strong Open-Source Options
-
-- **pure-LDP** — **Local differential privacy protocols** (open-source) — the frequency protocol foundation used by LDP-hierarchical-mechanism . **Best for**: building custom LDP mechanisms.
-- **Opacus** — **PyTorch library for training with differential privacy** (Apache-2.0) — **the DP-SGD standard for PyTorch**. **Best for**: training neural networks with formal DP guarantees.
-- **TensorFlow Privacy** — **DP-SGD for TensorFlow** (Apache-2.0) — **the TensorFlow equivalent** of Opacus.
-- Community **n8n** workflows for DP pipeline orchestration and privacy budget monitoring.
-
-**Frameworks for building custom systems**: Combine **Google Differential Privacy Library** for fast aggregations with **OpenDP/SmartNoise** for SQL and synthetic data, **trasgoDP** for local DP on raw data, **DPSDG** for DP synthetic tabular data, and **Opacus** for DP-SGD training—creating a comprehensive differential privacy stack.
-
-## How to Contribute
-
-1. Fork the repo.
-2. Add/edit entries in `README.md` (follow existing format).
-3. Include: name, link, 1–2 sentence description, and whether it's SaaS or open-source.
-4. Submit PR with a short explanation.
-
-Star the repo if you find it useful!
-
-## Disclaimer
-
-- This is a **community-curated** list — not exhaustive and not an endorsement.
-- Differential privacy tools must be evaluated for **mechanism correctness**, **privacy budget management**, and **utility trade-offs**. **Closed-source implementations cannot be independently audited**—a 2026 IEEE audit of Apple's DifferentialPrivacy.framework found DP violations in **5 out of 9 mechanisms**, impacting **87% of data collection in macOS Sonoma** due to insecure noise generators and disabled local DP in SecAgg .
-- **The "local vs. central" distinction determines your trust model.** **Local DP** (trasgoDP, LDP-hierarchical-mechanism) adds noise at the source—**the data collector never sees raw values** . **Central DP** (GoogleDP, OpenDP) adds noise to query results—**the curator sees raw data but outputs are protected** . **Choose based on whether you trust the data curator.**
-- **GoogleDP vs. OpenDP: performance vs. composability.** **GoogleDP is faster** for Count and Sum queries across all dataset sizes, with better scalability . **OpenDP offers a composable architecture** and **SmartNoise Synth** for synthetic data, with competitive utility for some queries . **Benchmark against your specific workload**—the "best" library depends on whether speed or formal extensibility matters more.
-- **Privacy budget (ε) selection has no universal standard.** **Common choices are 1.0, 5.0, or 10.0** . **Smaller ε means stronger privacy but more noise**; **larger ε means weaker privacy but better utility**. **Apple's audit found configured budgets often exceeding ε=6**—weak enough to allow membership inference success above **99.75%** . **Define your risk tolerance explicitly**—there are no accepted guidelines .
-- **DP synthetic data is not a silver bullet.** **DPSDG** and **SmartNoise Synth** produce records that preserve statistical patterns—but **small datasets suffer from excessive noise**, and **low-count queries or rare events may be distorted** . **Validate synthetic data against downstream tasks** before replacing real data.
-- Self-hosted open-source solutions require proper privacy budget accounting, mechanism validation, and ongoing maintenance. **Differential privacy is a mathematical guarantee**—implementation bugs can silently void the guarantee.
-
----
-
-**Made for privacy engineers, data scientists, and organizations building transparent differential privacy solutions.**  
+## Top Differential Privacy Ecosystem
+
+
+
+**Curated List of SaaS Products & Open-Source GitHub Projects**  
+
+*Focused on Formal Privacy Guarantees, DP-SGD & Synthetic Data Generation*  
+
+**Last updated: October 2026**
+
+
+
+This repository tracks notable **SaaS platforms** and **open-source projects** for **Differential Privacy**. These tools enable organizations to extract statistical insights from sensitive datasets while providing a mathematical guarantee that no individual's data can be re-identified—from local differential privacy libraries that noise raw data before collection to central DP frameworks that add calibrated noise to query results.
+
+
+
+**Examples** include Google Differential Privacy Library, OpenDP, SmartNoise, IBM Differential Privacy Library, Privitar, Immuta, and DPSDG (the category leaders).
+
+
+
+**Open-source emphasis**: This section is heavily expanded with every major active project for local DP, DP-SGD training, and synthetic data generation—ideal for privacy engineers, data scientists, and organizations seeking transparent, vendor-independent privacy infrastructure.
+
+
+
+Contributions welcome! Open a PR to add/update entries. Keep descriptions factual and link to official sites.
+
+
+
+## Table of Contents
+
+- [SaaS/Hosted Platforms](#saas-hosted-platforms)
+
+- [Open-Source GitHub Projects](#open-source-github-projects)
+
+- [How to Contribute](#how-to-contribute)
+
+- [Disclaimer](#disclaimer)
+
+
+
+## SaaS/Hosted Platforms
+
+
+
+- **Privitar (Informatica)**
+
+  **Data privacy platform with differential privacy module** — acquired by Informatica in June 2023 . The **Privitar Data Privacy Platform** integrates policy-based data privacy, masking, tokenization, and differential privacy into provisioning pipelines. **Privitar Differential Privacy** applies calibrated noise to datasets or query outputs for interactive analytics and non-interactive publication. **Trade-offs**: implementation typically requires lengthy enterprise deployment and specialist skills; post-acquisition, integration overhead increases for standalone buyers outside the Informatica stack . **Best for**: large enterprises in banking, healthcare, and insurance needing DP alongside broader data governance.
+
+
+
+- **Immuta**
+
+  **Data access governance platform** with policy enforcement, data masking, and audit trails. **Note**: Immuta's focus is access control and masking—differential privacy is not a native capability. **Best for**: organizations needing broad data governance, not mathematically guaranteed DP.
+
+
+
+## Open-Source GitHub Projects
+
+
+
+- **Google Differential Privacy Library**
+
+  **Differential Privacy libraries in C++, Java, and Go** (Apache-2.0) — **the performance benchmark for DP libraries** . **Core is implemented in C++** with Python bindings via **PyDP**, plus native Go and Java interfaces . **Supports count, sum, mean, variance, and percentiles** with both Laplace and Gaussian mechanisms. **Empirical benchmarks show GoogleDP consistently outperforms OpenDP in computational speed for Count and Sum queries**, with the advantage growing for larger datasets; OpenDP sometimes offers comparable or marginally better utility for Sum queries under stricter privacy settings . **Best for**: teams needing **fast, battle-tested DP aggregations** with broad language support.
+
+
+
+- **OpenDP**
+
+  **Community-driven DP library** (MIT) — initiated by **Harvard University** with Microsoft and others . **Composable architecture** built from transformations and measurements—designed for correctness and extensibility. **SmartNoise SDK** is part of the OpenDP project, with **SmartNoise SQL** for differentially private SQL queries and **SmartNoise Synth** for synthetic data generation (including **PATE-CTGAN**, a GAN-based method) . **The trade-off**: OpenDP's composable design may introduce performance overhead compared to GoogleDP's direct optimization, though utility can be competitive . **Best for**: teams wanting **a formally verified, extensible DP framework** with synthetic data capabilities.
+
+
+
+- **trasgoDP**
+
+  **Local Differential Privacy library for numerical, categorical, and location data** (open-source) — **the local DP choice** . **Numerical**: Laplace and Gaussian mechanisms with clipping. **Categorical**: Exponential mechanism and Randomized Response (binary and k-ary). **Location**: geo-indistinguishability for metric privacy . **Designed for pandas DataFrames**—apply DP directly to columns before data leaves the local environment. **Best for**: teams implementing **local DP** where noise is added to raw data at the source.
+
+
+
+- **DPSDG (Differentially Private Synthetic Data Generation)**
+
+  **DP-SGD extension for CTGAN and TVAE** (open-source) — **the DP synthetic data choice** . **Extends the popular `ctgan` package** with differentially private training via **DP-SGD** . **API mirrors the original**: swap `CTGAN` for `IterDPCTGAN` and add `epsilon`, `delta`, and `max_grad_norm` parameters . **Produces synthetic records that preserve statistical patterns without reproducing real individuals**—shareable for analytics and ML training where original data cannot be used. **Best for**: teams needing **privacy-preserving synthetic datasets** from tabular data.
+
+
+
+- **LDP-hierarchical-mechanism**
+
+  **Hierarchical mechanism for Local Differential Privacy** (open-source) — **the range query and quantile estimation choice** . Implements the **Hierarchical Mechanism** from Kulkarni, Cormode, and Srivastava for **answering range queries under local DP** . **Supports quantile estimation** and **range queries** with post-processing for improved accuracy. **Built on the pure-LDP frequency protocols** . **Best for**: teams needing **range queries and quantiles** under local DP constraints.
+
+
+
+### Additional Strong Open-Source Options
+
+
+
+- **pure-LDP** — **Local differential privacy protocols** (open-source) — the frequency protocol foundation used by LDP-hierarchical-mechanism . **Best for**: building custom LDP mechanisms.
+
+- **Opacus** — **PyTorch library for training with differential privacy** (Apache-2.0) — **the DP-SGD standard for PyTorch**. **Best for**: training neural networks with formal DP guarantees.
+
+- **TensorFlow Privacy** — **DP-SGD for TensorFlow** (Apache-2.0) — **the TensorFlow equivalent** of Opacus.
+
+- Community **n8n** workflows for DP pipeline orchestration and privacy budget monitoring.
+
+
+
+**Frameworks for building custom systems**: Combine **Google Differential Privacy Library** for fast aggregations with **OpenDP/SmartNoise** for SQL and synthetic data, **trasgoDP** for local DP on raw data, **DPSDG** for DP synthetic tabular data, and **Opacus** for DP-SGD training—creating a comprehensive differential privacy stack.
+
+
+
+## How to Contribute
+
+
+
+1. Fork the repo.
+
+2. Add/edit entries in `README.md` (follow existing format).
+
+3. Include: name, link, 1–2 sentence description, and whether it's SaaS or open-source.
+
+4. Submit PR with a short explanation.
+
+
+
+Star the repo if you find it useful!
+
+
+
+## Disclaimer
+
+
+
+- This is a **community-curated** list — not exhaustive and not an endorsement.
+
+- Differential privacy tools must be evaluated for **mechanism correctness**, **privacy budget management**, and **utility trade-offs**. **Closed-source implementations cannot be independently audited**—a 2026 IEEE audit of Apple's DifferentialPrivacy.framework found DP violations in **5 out of 9 mechanisms**, impacting **87% of data collection in macOS Sonoma** due to insecure noise generators and disabled local DP in SecAgg .
+
+- **The "local vs. central" distinction determines your trust model.** **Local DP** (trasgoDP, LDP-hierarchical-mechanism) adds noise at the source—**the data collector never sees raw values** . **Central DP** (GoogleDP, OpenDP) adds noise to query results—**the curator sees raw data but outputs are protected** . **Choose based on whether you trust the data curator.**
+
+- **GoogleDP vs. OpenDP: performance vs. composability.** **GoogleDP is faster** for Count and Sum queries across all dataset sizes, with better scalability . **OpenDP offers a composable architecture** and **SmartNoise Synth** for synthetic data, with competitive utility for some queries . **Benchmark against your specific workload**—the "best" library depends on whether speed or formal extensibility matters more.
+
+- **Privacy budget (ε) selection has no universal standard.** **Common choices are 1.0, 5.0, or 10.0** . **Smaller ε means stronger privacy but more noise**; **larger ε means weaker privacy but better utility**. **Apple's audit found configured budgets often exceeding ε=6**—weak enough to allow membership inference success above **99.75%** . **Define your risk tolerance explicitly**—there are no accepted guidelines .
+
+- **DP synthetic data is not a silver bullet.** **DPSDG** and **SmartNoise Synth** produce records that preserve statistical patterns—but **small datasets suffer from excessive noise**, and **low-count queries or rare events may be distorted** . **Validate synthetic data against downstream tasks** before replacing real data.
+
+- Self-hosted open-source solutions require proper privacy budget accounting, mechanism validation, and ongoing maintenance. **Differential privacy is a mathematical guarantee**—implementation bugs can silently void the guarantee.
+
+
+
+---
+
+
+
+**Made for privacy engineers, data scientists, and organizations building transparent differential privacy solutions.**  
+
 Let's make Differential Privacy more open, data-driven, and formally verified.
